@@ -36,7 +36,7 @@ def leer_anios() -> list[int]:
         Lista de años como enteros.
     """
     while True:
-        entrada = input("Ingrese una lista de años separados por comas (ej. 2024, 1900, 2000): ")
+        entrada = input("Ingrese años separados por comas (ej. 2000,2023,2024): ")
         try:
             # Separamos el texto por comas, quitamos espacios y convertimos a entero
             lista_anios = [int(x.strip()) for x in entrada.split(",")]
@@ -52,11 +52,10 @@ def main() -> None:
     # Filtramos usando comprensión de listas
     bisiestos = [anio for anio in anios_ingresados if es_bisiesto(anio)]
     
-    # Imprimimos el resumen
-    print("\n--- Resumen ---")
-    print(f"Total de años evaluados: {len(anios_ingresados)}")
-    print(f"Cantidad de años bisiestos encontrados: {len(bisiestos)}")
-    print(f"Lista de años bisiestos: {bisiestos}")
+    # Imprimimos el resumen con el formato exacto requerido
+    print(f"\nAños ingresados: {anios_ingresados}")
+    print(f"Años bisiestos: {bisiestos}")
+    print(f"Cantidad de años bisiestos: {len(bisiestos)} de {len(anios_ingresados)}")
 
 
 if __name__ == "__main__":
