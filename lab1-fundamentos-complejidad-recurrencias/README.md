@@ -1,107 +1,173 @@
 # Laboratorio 1 — Fundamentos, complejidad y recurrencias
 
 **Estudiante:** Samuel Cristobal Cuello Duque
-**Curso:** Análisis de Algoritmos
+**Curso:** Análisis de Algoritmos 190304006-1
 **Laboratorio:** Fundamentos, complejidad y recurrencias
 
 ---
 
-## Reproducción del laboratorio
+# Instrucciones de reproducción
 
-Para ejecutar el laboratorio se requiere Python 3 y la biblioteca `matplotlib`.
+El laboratorio fue desarrollado utilizando Python 3 y la biblioteca `matplotlib`.
 
-Desde la carpeta `lab1-fundamentos-complejidad-recurrencias` se ejecutan los experimentos con:
+La estructura del proyecto es:
+
+```text
+curso-analisis-algoritmos/
+└── lab1-fundamentos-complejidad-recurrencias/
+    ├── README.md
+    ├── algoritmos.py
+    ├── datos.py
+    ├── parte3_casos.py
+    ├── parte4_complejidad.py
+    └── graficas/
+        ├── parte3_comparaciones.png
+        ├── parte3_tiempo.png
+        └── parte4_tiempo.png
+```
+
+Para preparar el entorno se puede crear y activar un entorno virtual:
+
+```bash
+python -m venv .venv
+```
+
+En Git Bash:
+
+```bash
+source .venv/Scripts/activate
+```
+
+En Windows PowerShell:
+
+```powershell
+.venv\Scripts\Activate.ps1
+```
+
+Posteriormente se instala `matplotlib`:
+
+```bash
+python -m pip install matplotlib
+```
+
+## Ejecutar la Parte 3
+
+La implementación y el experimento de la Parte 3 se encuentran en:
+
+* [Código de la Parte 3](parte3_casos.py)
+* [Algoritmos de ordenamiento](algoritmos.py)
+* [Generadores de datos](datos.py)
+
+Para ejecutar:
 
 ```bash
 python parte3_casos.py
 ```
 
-Este programa ejecuta las pruebas de `insertion_sort` sobre los tres escenarios y genera:
+El programa genera:
 
 * `graficas/parte3_comparaciones.png`
 * `graficas/parte3_tiempo.png`
 
-Para ejecutar la comparación entre `insertion_sort` y `merge_sort` se utiliza:
+## Ejecutar la Parte 4
+
+La implementación y comparación de la Parte 4 se encuentran en:
+
+* [Código de la Parte 4](parte4_complejidad.py)
+* [Algoritmos de ordenamiento](algoritmos.py)
+* [Generadores de datos](datos.py)
+
+Para ejecutar:
 
 ```bash
 python parte4_complejidad.py
 ```
 
-Este programa genera:
+El programa genera:
 
 * `graficas/parte4_tiempo.png`
 
-La generación de los datos se realiza antes de iniciar la medición del tiempo, por lo que el tiempo registrado corresponde únicamente a la ejecución del algoritmo de ordenamiento.
+La generación de los datos se realiza antes de iniciar la medición. Por esta razón, el tiempo medido corresponde a la ejecución del algoritmo de ordenamiento y no al tiempo necesario para crear la entrada.
 
 ---
 
 # Parte 1 — Corrección vs. eficiencia
 
-La **corrección** de un algoritmo significa que este produce el resultado esperado para todas las entradas válidas. En el caso de la plataforma Tamiza, un algoritmo de ordenamiento es correcto si organiza los registros de acuerdo con el criterio solicitado, es decir, de mayor a menor índice de riesgo.
+La **corrección** de un algoritmo significa que este produce el resultado esperado para todas las entradas válidas. En el caso de la plataforma Tamiza, el algoritmo debe ordenar correctamente los registros de acuerdo con el índice de riesgo, de mayor a menor.
 
-La **eficiencia** está relacionada con los recursos que necesita el algoritmo para obtener ese resultado, principalmente el tiempo de ejecución y la memoria utilizada. Por lo tanto, un algoritmo puede ser correcto y aun así no ser apropiado para un problema real si tarda demasiado en ejecutarse.
+La **eficiencia** se refiere a los recursos utilizados para obtener ese resultado, principalmente el tiempo de ejecución y la memoria. Por esta razón, un algoritmo puede ser correcto y al mismo tiempo ser poco eficiente para una situación real.
 
-En Tamiza existe una restricción estricta de tiempo, ya que el procesamiento debe realizarse entre las 2:00 a. m. y las 6:00 a. m. Esto significa que existe una ventana máxima de cuatro horas para procesar y ordenar los registros. Si el algoritmo produce una lista correctamente ordenada, pero no termina dentro de ese intervalo, no cumple con las necesidades de la plataforma.
+En Tamiza existe una restricción estricta: el proceso nocturno debe ejecutarse entre las **2:00 a. m. y las 6:00 a. m.**, por lo que existe una ventana máxima de **cuatro horas**. Si el algoritmo consigue ordenar correctamente los registros, pero tarda más de cuatro horas, el sistema no cumple con el requisito operativo.
 
-Utilizar un servidor con el doble de velocidad puede disminuir el tiempo de ejecución, pero no modifica la complejidad del algoritmo. Si la cantidad de registros continúa creciendo, un algoritmo con comportamiento cuadrático seguirá teniendo un crecimiento considerable en el número de operaciones.
+La propuesta de utilizar un servidor con el doble de velocidad puede disminuir el tiempo de ejecución, pero no cambia la complejidad del algoritmo. Si el problema principal es que se utiliza un algoritmo con crecimiento cuadrático, aumentar la velocidad del hardware solamente proporciona una mejora limitada mientras la cantidad de registros continúa creciendo.
 
-Un ejemplo de algoritmo correcto pero poco viable sería `insertion_sort` cuando se utiliza sobre una cantidad muy grande de registros. El algoritmo puede ordenar correctamente los datos, pero en entradas desfavorables necesita una gran cantidad de comparaciones y desplazamientos. Por esta razón, para Tamiza no es suficiente con verificar que el algoritmo sea correcto; también es necesario seleccionar una solución que sea eficiente y pueda cumplir la ventana de procesamiento establecida.
+Un ejemplo propio sería un sistema de una tienda que debe ordenar **500.000 productos por precio antes de generar un catálogo que debe publicarse a las 6:00 a. m.** Si se utiliza un algoritmo correcto pero con complejidad Θ(n²), el sistema podría generar correctamente el catálogo, pero no terminar a tiempo. En este caso, cumplir con el resultado no es suficiente porque también existe una restricción de tiempo.
+
+Por lo tanto, en Tamiza se debe buscar una solución que sea correcta y, además, suficientemente eficiente para procesar grandes cantidades de registros dentro de la ventana establecida.
 
 ---
 
 # Parte 2 — Responsabilidad ambiental y ética
 
-La eficiencia de un algoritmo también tiene relación con el consumo de recursos tecnológicos. Un algoritmo que necesita más tiempo de procesamiento mantiene los equipos trabajando durante más tiempo y puede aumentar el consumo de energía. Cuando se procesan grandes cantidades de información de manera frecuente, esta diferencia puede ser significativa.
+La eficiencia de un algoritmo también tiene relación con el consumo de recursos tecnológicos. Cuando un algoritmo tarda más tiempo, el procesador y los demás componentes del sistema permanecen trabajando durante un período mayor. Si este proceso se ejecuta diariamente, el consumo adicional puede acumularse con el tiempo.
 
-Un primer daño concreto es el **mayor consumo energético** debido a que los servidores necesitan permanecer ejecutando el proceso durante más tiempo. El costo directo lo asumiría la organización encargada de la plataforma mediante un mayor consumo de recursos de infraestructura.
+Un primer perjuicio concreto es el **mayor consumo de energía eléctrica**. Si el procesamiento tarda más debido a una elección algorítmica poco eficiente, los servidores deben permanecer ejecutándose durante más tiempo. El costo directo de este consumo lo asumiría la organización responsable de la plataforma.
 
-Un segundo daño es el **uso ineficiente de los recursos tecnológicos**. Comprar hardware más potente para compensar las deficiencias de un algoritmo puede aumentar los costos de infraestructura sin solucionar la causa principal del problema. Este costo también recaería sobre la organización y, en el caso de una entidad pública, sobre los recursos destinados a la prestación del servicio.
+Un segundo perjuicio es el **incremento innecesario de los costos de infraestructura**. Una organización podría intentar compensar un algoritmo poco eficiente comprando servidores más potentes. Esto representa una inversión que puede ser innecesaria si el problema de fondo se encuentra en el algoritmo. En el caso de una plataforma de una entidad pública, este costo puede afectar los recursos disponibles para otros servicios.
 
-También existe un aspecto ético importante. En Tamiza, el orden de los registros determina quién debe ser contactado primero de acuerdo con su índice de riesgo. Una lista incompleta, incorrectamente ordenada o que no termine dentro de la ventana de procesamiento podría provocar que personas con mayor riesgo sean contactadas después de personas con menor prioridad.
+También existe un perjuicio relacionado con la confiabilidad del sistema. Si el proceso no termina dentro de la ventana de cuatro horas, pueden quedar registros sin procesar o generar una lista incompleta. Esto puede afectar directamente a las personas que esperan ser contactadas.
 
-Por esta razón, la eficiencia del algoritmo no solamente representa una decisión técnica. También puede tener consecuencias sobre el uso responsable de los recursos y sobre las personas que dependen de los resultados generados por el sistema.
+La situación tiene además una dimensión ética porque el orden de la lista determina **a quién se llama primero**. Los registros con un mayor índice de riesgo deben recibir prioridad. Por esta razón, una falla que afecte el orden o impida terminar el proceso puede provocar que una persona con mayor riesgo sea atendida después de otra con menor prioridad.
+
+Por lo tanto, la responsabilidad del equipo de desarrollo no consiste únicamente en producir un algoritmo que funcione. También debe considerar el uso responsable de los recursos, el impacto ambiental acumulado y las consecuencias que una decisión técnica puede generar sobre las personas.
 
 ---
 
 # Parte 3 — Casos de entrada e instrumentación
 
+## Código utilizado
+
+La implementación de los algoritmos se encuentra en [algoritmos.py](algoritmos.py), mientras que los generadores de los escenarios se encuentran en [datos.py](datos.py).
+
+El experimento completo de esta parte se encuentra en [parte3_casos.py](parte3_casos.py).
+
+---
+
 ## 3.1 Mejor, peor y promedio caso
 
-Para un tamaño de entrada fijo `n`, el **mejor caso** representa la entrada que requiere la menor cantidad de operaciones o comparaciones.
+Para un tamaño de entrada fijo `n`, el **mejor caso** corresponde a la entrada que necesita la menor cantidad de operaciones o comparaciones para ser procesada.
 
-El **peor caso** representa la entrada que requiere la mayor cantidad de operaciones o comparaciones.
+El **peor caso** corresponde a la entrada que necesita la mayor cantidad de operaciones o comparaciones.
 
-El **caso promedio** representa el comportamiento esperado considerando diferentes entradas posibles del mismo tamaño.
+El **caso promedio** corresponde al comportamiento esperado al considerar las diferentes entradas posibles de tamaño `n`. No significa simplemente tomar el punto medio entre el mejor y el peor caso, sino analizar el costo esperado sobre las entradas posibles.
 
-Los tres escenarios utilizados en el laboratorio son:
+En este laboratorio se utilizaron tres escenarios:
 
-* **Escenario A — Aleatorio:** los registros se encuentran en un orden sin relación con el orden requerido.
-* **Escenario B — Casi ordenado:** el 98 % de los registros ya se encuentra ordenado y el 2 % restante corresponde a nuevos resultados agregados al final.
-* **Escenario C — Inverso:** los registros se encuentran organizados en el sentido contrario al orden requerido.
+* **A — Aleatorio:** los elementos se encuentran en un orden sin relación con el orden requerido.
+* **B — Casi ordenado:** aproximadamente el 98 % de los registros ya se encuentra ordenado y el 2 % restante corresponde a nuevos registros agregados al final.
+* **C — Inverso:** los elementos se encuentran en el sentido contrario al orden requerido.
 
-Debido a que Tamiza tiene una restricción estricta de cuatro horas, para producción no sería adecuado diseñar la solución basándose únicamente en el mejor caso. Se debe considerar principalmente el peor caso para garantizar que el procesamiento pueda terminar dentro de la ventana disponible.
+Para decidir si un algoritmo puede utilizarse en producción bajo una ventana estricta de cuatro horas, se debe prestar especial atención al **peor caso**, porque no sería seguro asumir que siempre se recibirán entradas favorables. También es importante observar el comportamiento promedio, ya que representa el rendimiento esperado sobre entradas generales.
 
----
+### Predicción previa
 
-## 3.2 Predicción antes de medir
+Antes de ejecutar las pruebas se esperaba que:
 
-Antes de realizar las mediciones se esperaba que `insertion_sort` presentara diferentes comportamientos según el escenario.
+* **Casi ordenado** presentara el menor número de comparaciones y menor tiempo.
+* **Inverso** presentara el mayor número de comparaciones y mayor tiempo.
+* **Aleatorio** presentara un comportamiento intermedio.
 
-En el **escenario A (aleatorio)** se esperaba un comportamiento intermedio porque los elementos no tienen un orden previo definido.
-
-En el **escenario B (casi ordenado)** se esperaba el mejor comportamiento, debido a que la mayor parte de los datos ya se encuentra en el orden requerido y solamente una pequeña parte necesita ser procesada.
-
-En el **escenario C (inverso)** se esperaba el peor comportamiento, porque los elementos se encuentran organizados de manera contraria al orden requerido y el algoritmo necesita realizar una gran cantidad de comparaciones y desplazamientos.
+Esta predicción se realizó antes de observar los resultados experimentales.
 
 ---
 
-## 3.3 Resultados de las comparaciones
+## 3.2 Resultados de las comparaciones
 
 Las pruebas se realizaron con los tamaños:
 
 `100, 200, 400, 800, 1600, 3200 y 6400`.
 
-Los resultados obtenidos fueron:
+Los resultados fueron:
 
 | Tamaño `n` |  Aleatorio | Casi ordenado |    Inverso |
 | ---------: | ---------: | ------------: | ---------: |
@@ -113,19 +179,27 @@ Los resultados obtenidos fueron:
 |      3.200 |  2.533.103 |         4.172 |  5.118.400 |
 |      6.400 | 10.276.753 |        10.277 | 20.476.800 |
 
-Los resultados muestran que el escenario **inverso** requiere la mayor cantidad de comparaciones. Para `n = 6400` se realizaron **20.476.800 comparaciones**.
+El escenario **inverso** fue claramente el peor de los tres escenarios medidos. Para `n = 6400`, necesitó **20.476.800 comparaciones**.
 
-El escenario **aleatorio** presentó un resultado intermedio, con **10.276.753 comparaciones** para `n = 6400`.
+El escenario **aleatorio** presentó un comportamiento intermedio, alcanzando **10.276.753 comparaciones** para `n = 6400`.
 
-El escenario **casi ordenado** fue considerablemente más eficiente. Para `n = 6400` solamente se realizaron **10.277 comparaciones**.
+El escenario **casi ordenado** fue el más favorable, con solamente **10.277 comparaciones** para `n = 6400`.
 
-Estos resultados coinciden con la predicción inicial. El escenario casi ordenado es el más favorable para `insertion_sort`, mientras que el escenario inverso es el más costoso.
+Por lo tanto, los resultados confirman la predicción inicial:
+
+**Inverso → peor comportamiento**
+
+**Aleatorio → comportamiento intermedio**
+
+**Casi ordenado → mejor comportamiento**
+
+Es importante aclarar que el escenario aleatorio representa experimentalmente un comportamiento intermedio entre los casos favorable y desfavorable, mientras que el caso promedio en términos teóricos se refiere al costo esperado sobre las posibles entradas.
 
 ![Comparaciones de insertion sort](graficas/parte3_comparaciones.png)
 
 ---
 
-## 3.4 Resultados de tiempo
+## 3.3 Resultados del tiempo de ejecución
 
 Los tiempos obtenidos fueron:
 
@@ -139,116 +213,202 @@ Los tiempos obtenidos fueron:
 |      3.200 |      0.261485 |          0.000485 |    0.524873 |
 |      6.400 |      1.074454 |          0.001209 |    2.106491 |
 
-El escenario **inverso** presentó los mayores tiempos de ejecución. Para `n = 6400`, `insertion_sort` tardó **2.106491 segundos**.
+El escenario **inverso** presentó el mayor tiempo de ejecución. Para `n = 6400`, tardó **2.106491 segundos**.
 
-El escenario **aleatorio** tardó **1.074454 segundos** para el mismo tamaño.
+El escenario **aleatorio** tardó **1.074454 segundos**.
 
-Por otra parte, el escenario **casi ordenado** solamente tardó **0.001209 segundos** para `n = 6400`.
+El escenario **casi ordenado** solamente tardó **0.001209 segundos**.
 
-La diferencia entre los escenarios se hace mucho más evidente a medida que aumenta el tamaño de la entrada. Esto demuestra experimentalmente que el orden inicial de los datos tiene una influencia importante sobre el rendimiento de `insertion_sort`.
+La diferencia entre los escenarios aumenta considerablemente al crecer el tamaño de la entrada. Esto demuestra experimentalmente que `insertion_sort` es muy sensible al orden inicial de los datos.
 
 ![Tiempo de insertion sort](graficas/parte3_tiempo.png)
 
 ---
 
-## 3.5 Relación entre los resultados y la teoría
+## 3.4 Comparación con la teoría
 
-Los resultados obtenidos son coherentes con la complejidad teórica de `insertion_sort`.
+En el mejor caso, los registros ya están ordenados de acuerdo con el criterio requerido. En este caso, `insertion_sort` necesita aproximadamente una comparación por cada elemento, por lo que:
 
-En el mejor caso, cuando los datos ya se encuentran ordenados de acuerdo con el criterio requerido, el algoritmo realiza aproximadamente una comparación por elemento. Por esto:
+**T(n) = n - 1**
 
-**Mejor caso: Θ(n)**
+y:
 
-Los datos casi ordenados muestran este comportamiento. Por ejemplo, al pasar de `n = 3200` a `n = 6400`, las comparaciones aumentan de 4.172 a 10.277, manteniéndose muy por debajo de los valores de los escenarios aleatorio e inverso.
+**T(n) = Θ(n)**
 
-En el peor caso, cuando los datos están en el orden contrario, el algoritmo necesita realizar aproximadamente:
+Esto se refleja en el escenario casi ordenado, donde para `n = 6400` solamente se realizaron **10.277 comparaciones**.
 
-**n(n - 1) / 2**
+En el peor caso, los elementos están en el orden contrario. En este escenario se realizan:
+
+**1 + 2 + 3 + ... + (n - 1)**
 
 comparaciones.
+
+La suma es:
+
+**n(n - 1) / 2**
 
 Para `n = 6400`:
 
 **6400 × 6399 / 2 = 20.476.800**
 
-que coincide exactamente con las comparaciones obtenidas experimentalmente para el escenario inverso.
+Este resultado coincide exactamente con la medición obtenida para el escenario inverso.
 
 Por lo tanto:
 
-**Peor caso: Θ(n²)**
+**Peor caso = Θ(n²)**
 
-El escenario aleatorio también presenta un crecimiento cuadrático en promedio:
+El caso promedio también tiene comportamiento:
 
-**Caso promedio: Θ(n²)**
+**Θ(n²)**
 
-Los resultados experimentales permiten comprobar que el comportamiento de `insertion_sort` depende considerablemente de la distribución inicial de los datos.
+Los resultados experimentales son coherentes con estas complejidades. El crecimiento del escenario inverso es cuadrático, mientras que el escenario casi ordenado presenta un crecimiento mucho menor.
 
 ---
 
 # Parte 4 — Complejidad y comparación de algoritmos
 
-## 4.1 Complejidad de Merge Sort
+## Código utilizado
 
-Para `merge_sort` se tiene la recurrencia:
+La comparación experimental se encuentra en [parte4_complejidad.py](parte4_complejidad.py).
 
-**T(n) = 2T(n/2) + Θ(n)**
-
-La expresión indica que el problema se divide en dos subproblemas de tamaño `n/2` y posteriormente se realiza una operación de combinación con costo lineal.
-
-Mediante un árbol de recurrencia:
-
-* Nivel 0: `Θ(n)`
-* Nivel 1: `2 · Θ(n/2) = Θ(n)`
-* Nivel 2: `4 · Θ(n/4) = Θ(n)`
-* Nivel 3: `8 · Θ(n/8) = Θ(n)`
-* ...
-* Último nivel: aproximadamente `n` subproblemas de tamaño 1.
-
-Cada nivel tiene un costo total de `Θ(n)`.
-
-La cantidad de niveles es aproximadamente:
-
-**log₂(n)**
-
-Por lo tanto:
-
-**T(n) = Θ(n) · Θ(log n)**
-
-Finalmente:
-
-**T(n) = Θ(n log n)**
-
-Así, `merge_sort` presenta un crecimiento asintótico menor que `insertion_sort` en entradas grandes.
+La implementación de `insertion_sort` y `merge_sort` se encuentra en [algoritmos.py](algoritmos.py), mientras que la generación del escenario aleatorio se encuentra en [datos.py](datos.py).
 
 ---
 
-## 4.2 Complejidad de Insertion Sort
+## 4.1 Desarrollo de la recurrencia de Merge Sort
 
-En el mejor caso, los datos ya están ordenados de acuerdo con el criterio requerido. Se realiza una comparación por cada elemento después del primero:
+La recurrencia de `merge_sort` es:
+
+**T(n) = 2T(n/2) + Θ(n)**
+
+Cada término representa:
+
+* `2T(n/2)`: el algoritmo divide el problema en **dos subproblemas**, cada uno de tamaño `n/2`.
+* `Θ(n)`: después de resolver las dos partes, se deben combinar los resultados. Esta combinación requiere recorrer los elementos y tiene costo lineal.
+
+### Árbol de recurrencia
+
+En el primer nivel:
+
+**T(n) = 2T(n/2) + Θ(n)**
+
+El costo fuera de la recursión es:
+
+**Θ(n)**
+
+En el segundo nivel aparecen dos problemas:
+
+**2T(n/2) = 4T(n/4) + 2Θ(n/2)**
+
+Como:
+
+**2Θ(n/2) = Θ(n)**
+
+el costo de este nivel también es:
+
+**Θ(n)**
+
+En el tercer nivel:
+
+**4T(n/4) = 8T(n/8) + 4Θ(n/4)**
+
+y:
+
+**4Θ(n/4) = Θ(n)**
+
+Por lo tanto, cada nivel del árbol tiene un costo total de:
+
+**Θ(n)**
+
+El proceso continúa hasta llegar a subproblemas de tamaño 1.
+
+Para encontrar la cantidad de niveles:
+
+**n / 2^k = 1**
+
+Multiplicando por `2^k`:
+
+**n = 2^k**
+
+Aplicando logaritmo base 2:
+
+**k = log₂(n)**
+
+Por lo tanto, existen aproximadamente `log₂(n)` niveles y cada uno cuesta `Θ(n)`.
+
+Entonces:
+
+**T(n) = Θ(n) + Θ(n) + ... + Θ(n)**
+
+con `log₂(n)` niveles.
+
+Por lo tanto:
+
+**T(n) = Θ(n log n)**
+
+Así, la complejidad temporal de `merge_sort` es:
+
+**Mejor caso: Θ(n log n)**
+**Caso promedio: Θ(n log n)**
+**Peor caso: Θ(n log n)**
+
+---
+
+## Complejidad de Insertion Sort línea por línea
+
+`insertion_sort` recorre los elementos desde el segundo elemento hasta el último.
+
+El ciclo externo realiza:
+
+**n - 1**
+
+iteraciones.
+
+### Mejor caso
+
+Cuando los datos ya están ordenados de acuerdo con el criterio requerido, el ciclo `while` realiza solamente una comparación entre elementos en cada iteración.
+
+Por lo tanto:
+
+**1 + 1 + 1 + ... + 1**
+
+para `n - 1` elementos.
+
+Entonces:
 
 **T(n) = n - 1**
 
-Por lo tanto:
+y:
 
 **T(n) = Θ(n)**
 
-En el peor caso, cada nuevo elemento debe compararse con todos los elementos anteriores. La cantidad de comparaciones es:
+### Peor caso
+
+Cuando los datos están en orden inverso, para el segundo elemento se realiza una comparación, para el tercero dos comparaciones, para el cuarto tres, y así sucesivamente.
+
+La cantidad total es:
 
 **1 + 2 + 3 + ... + (n - 1)**
 
-Esta suma corresponde a:
+Utilizando la fórmula de la suma:
 
 **n(n - 1) / 2**
 
-Por lo tanto:
+Desarrollando:
+
+**(n² - n) / 2**
+
+El término dominante es `n²`, por lo que:
 
 **T(n) = Θ(n²)**
 
-En el caso promedio también se obtiene un comportamiento cuadrático:
+### Caso promedio
+
+En promedio, cada elemento debe compararse con una cantidad proporcional a los elementos que ya fueron procesados. Por lo tanto, el crecimiento promedio también es cuadrático:
 
 **T(n) = Θ(n²)**
 
-### Tabla comparativa
+### Tabla de complejidades
 
 | Algoritmo      | Mejor caso | Caso promedio | Peor caso  |
 | -------------- | ---------- | ------------- | ---------- |
@@ -257,11 +417,9 @@ En el caso promedio también se obtiene un comportamiento cuadrático:
 
 ---
 
-## 4.3 Comparación experimental
+## 4.2 Resultados experimentales de tiempo
 
-Se compararon `insertion_sort` y `merge_sort` utilizando el escenario aleatorio y los mismos tamaños de entrada.
-
-Los resultados fueron:
+Se utilizaron los mismos tamaños para ambos algoritmos y el escenario aleatorio:
 
 | Tamaño `n` | Insertion Sort (s) | Merge Sort (s) |
 | ---------: | -----------------: | -------------: |
@@ -273,46 +431,78 @@ Los resultados fueron:
 |      3.200 |           0.259574 |       0.007969 |
 |      6.400 |           1.074403 |       0.016237 |
 
-Los resultados muestran una diferencia cada vez mayor a medida que aumenta el tamaño de entrada.
+La curva de **Insertion Sort** aumenta rápidamente a medida que crece `n`. Para `n = 6400` alcanza **1.074403 segundos**.
 
-Para `n = 6400`, `insertion_sort` tardó **1.074403 segundos**, mientras que `merge_sort` tardó **0.016237 segundos**.
+La curva de **Merge Sort** presenta un crecimiento mucho más lento. Para `n = 6400` alcanza solamente **0.016237 segundos**.
 
-Por lo tanto, en esta prueba `merge_sort` fue aproximadamente **66 veces más rápido** que `insertion_sort` para `n = 6400`.
+La diferencia entre ambos algoritmos aumenta con el tamaño de entrada. En la última medición, `merge_sort` fue aproximadamente:
+
+**1.074403 / 0.016237 ≈ 66,2 veces más rápido**
+
+que `insertion_sort`.
 
 ![Comparación de tiempos entre insertion sort y merge sort](graficas/parte4_tiempo.png)
 
-Las pequeñas diferencias que pueden aparecer en tamaños pequeños no contradicen la teoría. En estas escalas pueden influir factores como el sistema operativo, otros procesos ejecutándose en el equipo, la memoria y los costos internos de Python. A medida que aumenta `n`, el efecto de la complejidad algorítmica se vuelve más evidente.
+Los resultados experimentales coinciden con el análisis teórico. `insertion_sort` tiene comportamiento Θ(n²) en promedio y peor caso, por lo que su curva crece rápidamente. `merge_sort`, con comportamiento Θ(n log n), presenta una curva mucho más favorable para entradas grandes.
+
+Por lo tanto, para el escenario de Tamiza, **merge_sort es el algoritmo más apropiado de los dos**.
+
+Las pequeñas diferencias observadas en tamaños pequeños pueden estar relacionadas con factores externos al algoritmo, como procesos del sistema operativo, administración de memoria y costos internos de Python. Al aumentar el tamaño de entrada, la diferencia causada por la complejidad algorítmica se vuelve más evidente.
 
 ---
 
 # Parte 4.3 — Concepto técnico para el equipo de ingeniería
 
-Para la plataforma Tamiza se recomienda utilizar **merge sort** como algoritmo de ordenamiento para el procesamiento de los registros de riesgo.
+Para la plataforma Tamiza se recomienda utilizar **merge_sort** en lugar de `insertion_sort` para ordenar los registros de riesgo.
 
-La principal razón es su complejidad temporal. `insertion_sort` presenta un comportamiento promedio y de peor caso de Θ(n²), mientras que `merge_sort` presenta un comportamiento de Θ(n log n). Esta diferencia es especialmente importante porque la plataforma debe procesar aproximadamente 1,2 millones de registros y cuenta con una ventana estricta de cuatro horas.
+La principal razón es la diferencia de complejidad. `insertion_sort` presenta Θ(n²) en el caso promedio y en el peor caso, mientras que `merge_sort` mantiene Θ(n log n) en los tres casos. Esta diferencia resulta especialmente importante porque la plataforma debe procesar aproximadamente **1.200.000 registros** dentro de una ventana estricta de cuatro horas.
 
-Las mediciones realizadas permiten observar esta diferencia incluso con tamaños mucho menores. Para `n = 6400`, `insertion_sort` tardó **1.074403 segundos**, mientras que `merge_sort` tardó **0.016237 segundos**. Esto significa que, en esta prueba, `merge_sort` fue aproximadamente 66 veces más rápido.
+Las mediciones realizadas permiten observar esta diferencia incluso con una cantidad de datos mucho menor. Para `n = 6400`, `insertion_sort` tardó **1.074403 segundos**, mientras que `merge_sort` tardó **0.016237 segundos**. Por lo tanto, en esta medición `merge_sort` fue aproximadamente **66,2 veces más rápido**.
 
-La estimación para 1,2 millones de registros debe considerarse una **extrapolación y no una medición directa**, porque las pruebas realizadas solamente llegaron hasta 6400 registros. Sin embargo, el comportamiento observado y las complejidades teóricas permiten anticipar que la diferencia entre ambos algoritmos aumentaría considerablemente al incrementar el tamaño de entrada.
+A partir del dato medido de `n = 6400`, se puede realizar una estimación del comportamiento para 1.200.000 registros. Para `insertion_sort`, tomando el comportamiento Θ(n²):
 
-Por esta razón, no se considera que simplemente duplicar la velocidad del servidor sea la solución principal. Aunque un hardware más rápido puede reducir los tiempos de ejecución, no cambia la complejidad del algoritmo. Un algoritmo Θ(n²) continuará teniendo un crecimiento mucho mayor que uno Θ(n log n) cuando aumente la cantidad de registros.
+**T(1.200.000) ≈ 1.074403 × (1.200.000 / 6.400)²**
 
-`merge_sort` tiene como desventaja que requiere memoria adicional para realizar la combinación de las listas. Sin embargo, esta desventaja resulta razonable frente a la mejora de tiempo obtenida en las pruebas. Además, su comportamiento es más predecible para diferentes tipos de entrada.
+**T(1.200.000) ≈ 37.771,98 segundos**
 
-Desde el punto de vista del mantenimiento y el riesgo, utilizar un algoritmo con mejor comportamiento asintótico disminuye la dependencia de incrementar constantemente la capacidad del hardware. Esto resulta importante para una plataforma que puede aumentar su volumen de registros con el tiempo.
+Esto corresponde aproximadamente a:
 
-En conclusión, se recomienda reemplazar `insertion_sort` por `merge_sort` y posteriormente realizar una prueba de carga con una cantidad de registros cercana al volumen real de producción. La decisión debe centrarse principalmente en mejorar la solución algorítmica y utilizar el hardware como complemento, no como sustituto de una elección algorítmica adecuada.
+**10,49 horas**
+
+Por lo tanto, esta extrapolación indica que `insertion_sort` podría superar ampliamente la ventana disponible de cuatro horas.
+
+Para `merge_sort`, utilizando su comportamiento Θ(n log n):
+
+**T(1.200.000) ≈ 0.016237 × (1.200.000 / 6.400) × (log₂(1.200.000) / log₂(6.400))**
+
+La estimación resultante es aproximadamente:
+
+**4,86 segundos**
+
+Estos valores son **estimaciones por extrapolación y no mediciones directas**, porque el experimento realizado solamente llegó hasta 6400 registros. Una prueba con 1.200.000 registros sería necesaria para conocer el comportamiento real bajo condiciones de producción.
+
+Respecto a la propuesta de comprar un servidor con el doble de velocidad, los resultados muestran que el problema no debería solucionarse únicamente aumentando la capacidad del hardware. Incluso si el servidor redujera aproximadamente a la mitad los tiempos de ejecución, `insertion_sort` seguiría teniendo un crecimiento Θ(n²). En cambio, `merge_sort` cambia el comportamiento asintótico a Θ(n log n), lo cual representa una mejora estructural.
+
+Una consideración adicional al tiempo es el **uso de memoria**. `merge_sort` necesita memoria adicional para realizar la combinación de las partes, mientras que `insertion_sort` utiliza poca memoria adicional. Sin embargo, para el volumen de datos de Tamiza, la reducción del tiempo de ejecución resulta más importante que esta desventaja, siempre que la infraestructura disponga de memoria suficiente.
+
+También se debe considerar el **mantenimiento y el riesgo operativo**. Un algoritmo con mejor complejidad permite que el sistema sea menos dependiente de futuras ampliaciones de hardware y ofrece un comportamiento más predecible cuando aumente la cantidad de registros. Esto disminuye el riesgo de que el procesamiento supere la ventana nocturna.
+
+Por estas razones, la recomendación técnica es **implementar `merge_sort`** y posteriormente realizar una prueba de carga con un volumen de datos cercano al real. El aumento de capacidad del servidor puede complementar la solución, pero no debería utilizarse como sustituto de una mejora algorítmica.
 
 ---
 
 # Conclusión general
 
-El laboratorio permitió comprobar experimentalmente la importancia de analizar tanto la corrección como la eficiencia de un algoritmo.
+El laboratorio permitió comprobar la importancia de analizar tanto la corrección como la eficiencia de un algoritmo antes de implementarlo en un sistema real.
 
-En la Parte 3 se observó que `insertion_sort` presenta comportamientos muy diferentes dependiendo del orden inicial de los datos. El escenario casi ordenado fue el más favorable, con solamente **10.277 comparaciones y 0.001209 segundos** para `n = 6400`. En contraste, el escenario inverso alcanzó **20.476.800 comparaciones y 2.106491 segundos** para el mismo tamaño.
+En la Parte 3 se comprobó que `insertion_sort` depende considerablemente del orden inicial de los datos. Para `n = 6400`, el escenario casi ordenado necesitó solamente **10.277 comparaciones y 0.001209 segundos**, mientras que el escenario inverso necesitó **20.476.800 comparaciones y 2.106491 segundos**.
 
-Los resultados también coincidieron con la teoría: `insertion_sort` presenta un mejor caso de Θ(n), pero un caso promedio y peor caso de Θ(n²).
+Los resultados coinciden con la teoría: `insertion_sort` tiene un mejor caso de Θ(n), pero un caso promedio y peor caso de Θ(n²).
 
-En la Parte 4, la comparación experimental mostró una ventaja clara de `merge_sort`. Para `n = 6400`, `insertion_sort` tardó **1.074403 segundos**, mientras que `merge_sort` tardó **0.016237 segundos**, aproximadamente 66 veces menos tiempo.
+En la Parte 4, la comparación entre ambos algoritmos mostró una ventaja clara para `merge_sort`. Para `n = 6400`, `insertion_sort` tardó **1.074403 segundos**, mientras que `merge_sort` tardó **0.016237 segundos**, siendo aproximadamente 66,2 veces más rápido en esta prueba.
 
-Por lo tanto, considerando el volumen de datos de Tamiza y la restricción de cuatro horas, `merge_sort` es una alternativa más adecuada que `insertion_sort`. El análisis demuestra que mejorar la complejidad del algoritmo es una decisión más importante que depender únicamente de aumentar la velocidad del hardware.
+La complejidad teórica explica esta diferencia: `insertion_sort` crece de manera cuadrática, mientras que `merge_sort` crece como Θ(n log n).
+
+La extrapolación realizada para 1.200.000 registros también muestra por qué la elección del algoritmo es importante. Bajo las hipótesis utilizadas, `insertion_sort` podría tardar aproximadamente 10,49 horas, superando la ventana de cuatro horas, mientras que `merge_sort` tendría una estimación de aproximadamente 4,86 segundos. Estas cifras son estimaciones y deben validarse mediante una prueba de carga real.
+
+En conclusión, para Tamiza se recomienda utilizar **merge_sort** y realizar pruebas adicionales con un volumen de datos cercano al de producción. La mejora algorítmica debe ser la principal estrategia y el aumento de capacidad del servidor debe considerarse como un complemento.
