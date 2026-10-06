@@ -46,7 +46,7 @@
 
 **Lo que puede mejorar:**
 - Varias funciones (`medir_escenario`, `medir_algoritmo`, las que grafican y `merge_sort_recursivo`) no tienen todos los tipos indicados y sus descripciones no siguen el formato Google (Args y Returns).
-- Detalles de estilo: falta una línea en blanco entre funciones en `algoritmos.py` y falta salto de línea al final de los archivos.
+- Detalle de estilo: falta una línea en blanco entre funciones en `algoritmos.py`.
 
 ## 4. Calidad del análisis de las gráficas (15 / 20)
 **Lo que hizo bien:**
