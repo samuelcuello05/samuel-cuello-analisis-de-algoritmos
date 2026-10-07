@@ -1,6 +1,7 @@
 """Experimento de peor, mejor y caso promedio para insertion sort."""
 
 import time
+from collections.abc import Callable
 from pathlib import Path
 
 import matplotlib.pyplot as plt
@@ -18,8 +19,21 @@ TAMANOS = [100, 200, 400, 800, 1600, 3200, 6400]
 CARPETA_GRAFICAS = Path("graficas")
 
 
-def medir_escenario(generador, n: int):
-    """Genera datos y mide únicamente la ejecución del algoritmo."""
+def medir_escenario(
+    generador: Callable[[int], list[int]],
+    n: int,
+) -> tuple[float, int]:
+    """Genera un lote y mide unicamente la ejecucion de insertion sort.
+
+    Args:
+        generador: funcion de datos.py que recibe n y devuelve el lote
+            de indices de riesgo del escenario.
+        n: cantidad de registros del lote.
+
+    Returns:
+        Una tupla con el tiempo de ejecucion del algoritmo en segundos
+        y el numero de comparaciones entre elementos.
+    """
     datos = generador(n)
 
     inicio = time.perf_counter()
@@ -31,8 +45,14 @@ def medir_escenario(generador, n: int):
     return tiempo, comparaciones
 
 
-def ejecutar_experimento():
-    """Ejecuta las mediciones de los tres escenarios."""
+def ejecutar_experimento() -> dict[str, dict[str, list[float]]]:
+    """Ejecuta las mediciones de los tres escenarios para cada tamano.
+
+    Returns:
+        Diccionario indexado por nombre de escenario. Cada valor tiene
+        las listas "tiempo" (segundos) y "comparaciones", en el mismo
+        orden de TAMANOS.
+    """
     resultados = {
         "Aleatorio": {"tiempo": [], "comparaciones": []},
         "Casi ordenado": {"tiempo": [], "comparaciones": []},
@@ -61,8 +81,14 @@ def ejecutar_experimento():
     return resultados
 
 
-def graficar_comparaciones(resultados):
-    """Genera la gráfica de comparaciones."""
+def graficar_comparaciones(
+    resultados: dict[str, dict[str, list[float]]],
+) -> None:
+    """Genera la grafica de comparaciones vs. tamano de entrada.
+
+    Args:
+        resultados: diccionario devuelto por ejecutar_experimento.
+    """
     CARPETA_GRAFICAS.mkdir(exist_ok=True)
 
     plt.figure()
@@ -90,8 +116,12 @@ def graficar_comparaciones(resultados):
     plt.close()
 
 
-def graficar_tiempo(resultados):
-    """Genera la gráfica de tiempo."""
+def graficar_tiempo(resultados: dict[str, dict[str, list[float]]]) -> None:
+    """Genera la grafica de tiempo de ejecucion vs. tamano de entrada.
+
+    Args:
+        resultados: diccionario devuelto por ejecutar_experimento.
+    """
     CARPETA_GRAFICAS.mkdir(exist_ok=True)
 
     plt.figure()
