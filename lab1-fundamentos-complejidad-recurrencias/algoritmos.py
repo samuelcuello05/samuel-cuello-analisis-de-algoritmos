@@ -33,6 +33,7 @@ def insertion_sort(datos: list[int]) -> tuple[list[int], int]:
 
     return copia, comparaciones
 
+
 def merge_sort(datos: list[int]) -> tuple[list[int], int]:
     """Ordena una lista de indices de riesgo con el metodo de mezcla.
 
@@ -47,7 +48,17 @@ def merge_sort(datos: list[int]) -> tuple[list[int], int]:
     """
     copia = datos.copy()
 
-    def merge_sort_recursivo(lista):
+    def merge_sort_recursivo(lista: list[int]) -> tuple[list[int], int]:
+        """Divide la lista, ordena cada mitad y las mezcla de mayor a menor.
+
+        Args:
+            lista: sublista de indices de riesgo a ordenar.
+
+        Returns:
+            Una tupla con una nueva lista ordenada de mayor a menor y el
+            numero de comparaciones entre elementos hechas en esta llamada
+            y en todas sus llamadas recursivas.
+        """
         if len(lista) <= 1:
             return lista, 0
 
